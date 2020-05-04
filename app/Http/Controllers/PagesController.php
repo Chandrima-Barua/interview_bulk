@@ -2,6 +2,7 @@
 
 namespace Bulkly\Http\Controllers;
 
+use Bulkly\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
@@ -183,6 +184,17 @@ class PagesController extends Controller
     {
         return view('auth.friday');
     }
+
+
+    public function buffer_list(Request $request){
+        $socialusers  = SocialPostGroups::select('name', 'type')->where('user_id', Auth::id())->get();
+//        $user = SocialPostGroups::all()->toArray();
+//        $user = User::select('avatar')->where('user_id', Auth::id())->get();
+//        var_dump($user);
+        $profiles = BufferPosting::where('user_id', Auth::id())->get();
+        return view('pages.buffer-posting')->with('profiles', $profiles)->with('socialusers', $socialusers );
+}
+
 
 
 }
